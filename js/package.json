@@ -13,12 +13,13 @@
   "scripts": {
     "bootstrap": "lerna link && lerna bootstrap",
     "build": "lerna run build",
-    "start": "cross-env CI=true lerna run start --scope @oyster/common --stream --parallel --scope web",
+    "start": "cross-env CI=true lerna run start --scope @oyster/common --stream --parallel --scope web ",
     "lint": "prettier -c 'packages/*/{src,test}/**/*.ts' && npm run lint:eslint",
     "lint:eslint": "eslint 'packages/*/{src,test}/**/*.ts'",
     "lint:fix": "prettier --write 'packages/*/{src,test}/**/*.{ts,tsx}' && eslint --fix 'packages/*/{src,test}/**/*.ts'",
     "format:fix": "lerna run format:fix",
-    "deploy": "run-s deploy:docs build deploy:apps && gh-pages -d docs",
+    "deploy:gh": "yarn export && gh-pages -d ../../build/web --repo https://github.com/johni1228/metaplex -t true",
+    "deploy": "cross-env ASSET_PREFIX=/metaplex/ yarn build && yarn deploy:gh",
     "deploy:docs": "lerna run docs",
     "deploy:apps": "lerna run deploy:app",
     "test": "lerna run test --concurrency 1 --stream"
